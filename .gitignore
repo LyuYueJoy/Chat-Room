@@ -1,0 +1,46 @@
+## Build Folders (bin/obj)
+bin/
+obj/
+
+## User-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+## Auto-generated files
+Generated_Code/
+
+## OS junk
+.DS_Store
+Thumbs.db
+
+## Rider
+.idea/
+
+## VS Code
+.vscode/
+
+## ASP.NET Core Environment files
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.json
+.vs/
+
+## Secrets
+secrets.json
+
+## Logs
+*.log
+
+## Package manager directories
+node_modules/
+npm-debug.log
+yarn-error.log
+
+## Publish
+publish/
+
+## Other
+_ReSharper*/
+*.DotSettings.user
