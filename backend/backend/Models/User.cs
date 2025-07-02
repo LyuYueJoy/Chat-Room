@@ -9,6 +9,7 @@ namespace backend.Models
         public string Email { get; set; } = null!;
         public string PasswordHash { get; set; } = null!;
         public string DisplayName { get; set; } = null!;
-        public string[] Interests { get; set; } = Array.Empty<string>();
+        public string? AvatarUrl { get; set; }
+        public string? InterestsCsv { get; set; }
     }
 }
