@@ -15,8 +15,12 @@ export default function RegisterPage() {
       await register({ email, password, displayName });
       alert("Successful registration！");
       window.location.href = "/login";
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error(err.message);
+      } else {
+        console.error('Unknown error', err);
+      }
     }
   };
 

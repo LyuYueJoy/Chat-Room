@@ -14,8 +14,12 @@ export default function LoginPage() {
       await login({ email, password });
       alert("Login successful!");
       window.location.href = "/";
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error(err.message);
+      } else {
+        console.error('Unknown error', err);
+      }
     }
   };
 
