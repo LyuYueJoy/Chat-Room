@@ -29,7 +29,6 @@ namespace backend.Controllers
                     email = u.Email,
                     displayName = u.DisplayName,
                     avatarUrl = u.AvatarUrl,
-                    interests = u.InterestsCsv
                 })
                 .ToListAsync();
 

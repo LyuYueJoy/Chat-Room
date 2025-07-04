@@ -36,7 +36,6 @@ namespace backend.Controllers
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
                 DisplayName = request.DisplayName,
                 AvatarUrl = request.AvatarUrl,
-                InterestsCsv = string.Join(",", request.Interests ?? new List<string>())
             };
 
             _db.Users.Add(user);

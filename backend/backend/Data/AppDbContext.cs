@@ -11,9 +11,12 @@ namespace backend.Data
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<UserInterest> UserInterests { get; set; }
         public DbSet<Friend> Friends { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<WhiteboardSession> WhiteboardSessions { get; set; }
         public DbSet<WhiteboardAction> WhiteboardActions { get; set; }
+
+
     }
 }

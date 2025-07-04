@@ -1,4 +1,5 @@
 ﻿using backend.Data;
+using backend.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("WebAPIConnection")));
 
+//repo/irepo
+builder.Services.AddScoped<IUserInterestRepository, UserInterestRepository>();
+
 //2.use cookie auth
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -25,6 +29,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 
 builder.Services.AddAuthorization();
+
+
+
 
 
 //CORS

@@ -34,7 +34,6 @@ namespace backend.Controllers
                 email = user.Email,
                 displayName = user.DisplayName,
                 avatarUrl = user.AvatarUrl,
-                interests = user.InterestsCsv?.Split(',', StringSplitOptions.RemoveEmptyEntries)
             });
         }
 

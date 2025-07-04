@@ -10,6 +10,5 @@ namespace backend.Models
         public string PasswordHash { get; set; } = null!;
         public string DisplayName { get; set; } = null!;
         public string? AvatarUrl { get; set; }
-        public string? InterestsCsv { get; set; }
     }
 }
