@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using backend.Data;
+using backend.Dtos;
 namespace backend.Controllers
 {
     [ApiController]
@@ -36,6 +37,26 @@ namespace backend.Controllers
                 avatarUrl = user.AvatarUrl,
             });
         }
+
+        [Authorize]
+        [HttpPut("profile/display-name")]
+        public async Task<IActionResult> UpdateDisplayName([FromBody] UpdateDisplayNameRequest request)
+        {
+            var userIdStr = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userIdStr == null)
+                return Unauthorized();
+
+            var userId = Guid.Parse(userIdStr);
+            var user = await _db.Users.FindAsync(userId);
+            if (user == null)
+                return NotFound();
+
+            user.DisplayName = request.NewDisplayName;
+            await _db.SaveChangesAsync();
+
+            return NoContent();
+        }
+
 
     }
 }
