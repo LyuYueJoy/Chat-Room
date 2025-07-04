@@ -4,9 +4,10 @@
       "type": "secrets.user"
     },
     "mssql1": {
-      "serviceConnectorResourceId": "",
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ServiceLinker/locations/westus/connectors/ConnectionStringsWebAPIConnection_2902FC17EA",
       "secretStore": "LocalSecretsFile",
-      "type": "mssql.local",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/connectspaceserver/databases/ConnectSpaceDB",
+      "type": "mssql.azure",
       "connectionId": "ConnectionStrings:WebAPIConnection",
       "dynamicId": null
     }
