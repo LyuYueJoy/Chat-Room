@@ -1,5 +1,4 @@
-import { ThemeProvider } from "@/context/ThemeContext";
-
+import ThemeContextProvider from "@/context/ThemeContext";
 
 export default function RootLayout({
   children,
@@ -9,9 +8,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeProvider>
+        <ThemeContextProvider>
           <main>{children}</main>
-        </ThemeProvider>
+        </ThemeContextProvider>
+          
       </body>
     </html>
   );

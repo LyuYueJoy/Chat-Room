@@ -1,62 +1,61 @@
 "use client";
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { createTheme, ThemeProvider as MuiThemeProvider, Theme } from "@mui/material/styles";
 
-type Mode = "light" | "dark";
+import React, { createContext, useContext, useMemo, useState } from "react";
+import { ThemeProvider, createTheme, CssBaseline, Fab, Tooltip } from "@mui/material";
 
-interface ThemeContextType {
-  mode: Mode;
-  toggleMode: () => void;
+type ThemeMode = "light" | "dark";
+
+interface ThemeContextProps {
+  mode: ThemeMode;
+  toggleTheme: () => void;
 }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+const ThemeContext = createContext<ThemeContextProps>({
+  mode: "light",
+  toggleTheme: () => {},
+});
 
-export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [mode, setMode] = useState<Mode>("light");
-  const [mounted, setMounted] = useState(false);
+export const useThemeContext = () => useContext(ThemeContext);
 
-  // 第一次客户端加载时读取localStorage
-  useEffect(() => {
-    const stored = localStorage.getItem("theme");
-    if (stored === "dark") {
-      setMode("dark");
-    }
-    setMounted(true); // 标记已挂载
-  }, []);
+export default function ThemeContextProvider({ children }: { children: React.ReactNode }) {
+  const [mode, setMode] = useState<ThemeMode>("light");
 
-  const toggleMode = () => {
-    setMode((prev) => {
-      const next = prev === "light" ? "dark" : "light";
-      localStorage.setItem("theme", next);
-      return next;
-    });
+  const toggleTheme = () => {
+    setMode((prev) => (prev === "light" ? "dark" : "light"));
   };
 
-  const theme: Theme = useMemo(
+  const theme = useMemo(
     () =>
       createTheme({
         palette: {
-          mode: mode,
+          mode,
         },
       }),
     [mode]
   );
 
-  if (!mounted) {
-    return null;
-  }
-
   return (
-    <ThemeContext.Provider value={{ mode, toggleMode }}>
-      <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>
+    <ThemeContext.Provider value={{ mode, toggleTheme }}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {children}
+        {/* 全局按钮 */}
+        <Tooltip title="切换亮/暗模式" placement="top">
+          <Fab
+            color="primary"
+            onClick={toggleTheme}
+            size="small"
+            sx={{
+              position: "fixed",
+              bottom: 16,
+              left: 16,
+              zIndex: 9999,
+            }}
+          >
+            {mode === "light" ? "dark" : "light"}
+          </Fab>
+        </Tooltip>
+      </ThemeProvider>
     </ThemeContext.Provider>
   );
-};
-
-export const useThemeMode = () => {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error("useThemeMode must be used within ThemeProvider");
-  }
-  return context;
-};
+}
