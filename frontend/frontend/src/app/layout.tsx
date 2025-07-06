@@ -1,4 +1,3 @@
-import Navbar from "@/components/navebar/navbar";
 import { ThemeProvider } from "@/context/ThemeContext";
 
 
@@ -11,7 +10,6 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ThemeProvider>
-          <Navbar />
           <main>{children}</main>
         </ThemeProvider>
       </body>

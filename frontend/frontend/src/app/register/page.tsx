@@ -1,6 +1,9 @@
 "use client";
 import { useState } from "react";
 import { register } from "@/services/authService";
+import { useRouter } from "next/navigation";
+import Navbar from "@/components/navebar/navbar";
+
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -8,13 +11,15 @@ export default function RegisterPage() {
   const [displayName, setDisplayName] = useState("");
   const [error, setError] = useState("");
 
+  const router = useRouter();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     try {
       await register({ email, password, displayName });
       alert("Successful registration！");
-      window.location.href = "/login";
+      router.push("/login");
     } catch (err: unknown) {
       if (err instanceof Error) {
         console.error(err.message);
@@ -25,7 +30,9 @@ export default function RegisterPage() {
   };
 
   return (
-    <main style={{ maxWidth: 400, margin: "2rem auto" }}>
+    <div>
+      <Navbar />
+    <div style={{ maxWidth: 400, margin: "2rem auto" }}>
       <h2>register</h2>
       <form onSubmit={handleSubmit}>
         <input
@@ -57,6 +64,7 @@ export default function RegisterPage() {
       <p style={{ marginTop: 16 }}>
         Already have an account？ <a href="/login">login</a>
       </p>
-    </main>
+    </div>
+    </div>
   );
 }

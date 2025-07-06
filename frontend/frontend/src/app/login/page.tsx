@@ -1,11 +1,15 @@
 "use client";
 import { useState } from "react";
 import { login } from "@/services/authService";
+import { useRouter } from "next/navigation";
+import Navbar from "@/components/navebar/navbar";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -13,7 +17,8 @@ export default function LoginPage() {
     try {
       await login({ email, password });
       alert("Login successful!");
-      window.location.href = "/";
+      // jump to home page
+      router.push("/home");
     } catch (err: unknown) {
       if (err instanceof Error) {
         console.error(err.message);
@@ -24,7 +29,11 @@ export default function LoginPage() {
   };
 
   return (
-    <main style={{ maxWidth: 400, margin: "2rem auto" }}>
+    <div>
+      <Navbar />
+    
+    <div style={{ maxWidth: 400, margin: "2rem auto" }}>
+      
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <input
@@ -49,6 +58,7 @@ export default function LoginPage() {
       <p style={{ marginTop: 16 }}>
         Do not have an account? <a href="/register">register</a>
       </p>
-    </main>
+    </div>
+    </div>
   );
 }
