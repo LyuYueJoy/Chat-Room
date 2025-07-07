@@ -17,16 +17,20 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setSuccess("");
     try {
       await register({ email, password, displayName });
-      alert("Successful registration!");
-      router.push("/login");
+      setSuccess("Registration successful! Redirecting to login...");
+      setTimeout(() => {
+        router.push("/login");
+      }, 1500);
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
@@ -71,6 +75,11 @@ export default function RegisterPage() {
           {error && (
             <Typography color="error" variant="body2" mt={1}>
               {error}
+            </Typography>
+          )}
+          {success && (
+            <Typography color="primary" variant="body2" mt={1}>
+              {success}
             </Typography>
           )}
           <Button

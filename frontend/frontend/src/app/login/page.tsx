@@ -16,16 +16,20 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(""); // 新增登录成功状态
 
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setSuccess("");
     try {
       await login({ email, password });
-      alert("Login successful!");
-      router.push("/home");
+      setSuccess("Login successful! Redirecting...");
+      setTimeout(() => {
+        router.push("/home");
+      }, 1000); // 延迟跳转，方便用户看到提示
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
@@ -62,6 +66,11 @@ export default function LoginPage() {
           {error && (
             <Typography color="error" variant="body2" mt={1}>
               {error}
+            </Typography>
+          )}
+          {success && (
+            <Typography color="primary" variant="body2" mt={1}>
+              {success}
             </Typography>
           )}
           <Button
