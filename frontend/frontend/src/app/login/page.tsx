@@ -1,8 +1,16 @@
 "use client";
+
 import { useState } from "react";
 import { login } from "@/services/authService";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/navebar/navbar";
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Link,
+} from "@mui/material";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -17,13 +25,12 @@ export default function LoginPage() {
     try {
       await login({ email, password });
       alert("Login successful!");
-      // jump to home page
       router.push("/home");
     } catch (err: unknown) {
       if (err instanceof Error) {
-        console.error(err.message);
+        setError(err.message);
       } else {
-        console.error('Unknown error', err);
+        setError("Unknown error");
       }
     }
   };
@@ -31,34 +38,49 @@ export default function LoginPage() {
   return (
     <div>
       <Navbar />
-    
-    <div style={{ maxWidth: 400, margin: "2rem auto" }}>
-      
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          style={{ display: "block", width: "100%", marginBottom: 8 }}
-        />
-        <input
-          type="password"
-          placeholder="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={{ display: "block", width: "100%", marginBottom: 8 }}
-        />
-        <button type="submit" style={{ width: "100%" }}>
+      <Box maxWidth={400} mx="auto" mt={4}>
+        <Typography variant="h5" gutterBottom>
           Login
-        </button>
-      </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <p style={{ marginTop: 16 }}>
-        Do not have an account? <a href="/register">register</a>
-      </p>
-    </div>
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit}>
+          <TextField
+            label="Email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          {error && (
+            <Typography color="error" variant="body2" mt={1}>
+              {error}
+            </Typography>
+          )}
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{ mt: 2 }}
+          >
+            Login
+          </Button>
+        </Box>
+        <Typography variant="body2" mt={2}>
+          Do not have an account?{" "}
+          <Link href="/register" underline="hover">
+            Register
+          </Link>
+        </Typography>
+      </Box>
     </div>
   );
 }

@@ -16,8 +16,12 @@ export default function InterestLoader() {
         const data: InterestItem[] = await fetchUserInterests();
         const interestStrings = data.map((item) => item.interest);
         setInterests(interestStrings);
-      } catch (e: any) {
-        setError(e.message || "请求失败");
+      } catch (e: unknown) {
+        if (e instanceof Error) {
+            setError(e.message);
+        } else {
+            setError("Request failed");
+        }
       } finally {
         setLoading(false);
       }
