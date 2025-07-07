@@ -1,6 +1,6 @@
 import Navbar from "@/components/navebar/navbarHome";
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import InterestLoader  from "@/components/UserInterests/InterestManager";
 
 export default function ProfilePage() {

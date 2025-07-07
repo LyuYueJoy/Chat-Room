@@ -4,13 +4,11 @@ import React from "react";
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import { useRouter, usePathname } from "next/navigation";
 
-
 export default function NavbarHome() {
   const router = useRouter();
   const pathname = usePathname();
 
-  // 根据当前路径决定激活哪个 tab
-  const getValueFromPath = () => {
+  const getValueFromPath = React.useCallback(() => {
     switch (pathname) {
       case "/rooms":
         return 0;
@@ -23,16 +21,15 @@ export default function NavbarHome() {
       case "/profile":
         return 4;
       default:
-        return 2; // 默认首页
+        return 2; // homepage
     }
-  };
+  }, [pathname]);
 
   const [value, setValue] = React.useState(getValueFromPath);
 
-  // 当路径变化时，更新 value
   React.useEffect(() => {
     setValue(getValueFromPath());
-  }, [pathname]);
+  }, [getValueFromPath]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -67,11 +64,11 @@ export default function NavbarHome() {
       elevation={3}
     >
       <BottomNavigation value={value} onChange={handleChange} showLabels>
-        <BottomNavigationAction label="rooms"  />
-        <BottomNavigationAction label="explore"  />
-        <BottomNavigationAction label="home"  />
-        <BottomNavigationAction label="messages"  />
-        <BottomNavigationAction label="profile"  />
+        <BottomNavigationAction label="rooms" />
+        <BottomNavigationAction label="explore" />
+        <BottomNavigationAction label="home" />
+        <BottomNavigationAction label="messages" />
+        <BottomNavigationAction label="profile" />
       </BottomNavigation>
     </Paper>
   );
