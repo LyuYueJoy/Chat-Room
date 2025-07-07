@@ -24,8 +24,23 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     {
         options.LoginPath = "/api/auth/login";
         options.Cookie.Name = "ConnectSpaceAuth";
+        options.Cookie.SameSite = SameSiteMode.None; 
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always; 
         options.ExpireTimeSpan = TimeSpan.FromDays(7);
         options.SlidingExpiration = true;
+        options.Events = new CookieAuthenticationEvents
+        {
+            OnRedirectToLogin = ctx =>
+            {
+                ctx.Response.StatusCode = 401; // 别跳转
+                return Task.CompletedTask;
+            },
+            OnRedirectToAccessDenied = ctx =>
+            {
+                ctx.Response.StatusCode = 403;
+                return Task.CompletedTask;
+            }
+        };
     });
 
 builder.Services.AddAuthorization();
@@ -59,6 +74,10 @@ app.UseCors("AllowFrontend");
 
 app.UseHttpsRedirection();
 
+// 先认证
+app.UseAuthentication();
+
+// 再授权
 app.UseAuthorization();
 
 app.MapControllers();
