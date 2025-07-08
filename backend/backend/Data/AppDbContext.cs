@@ -16,6 +16,8 @@ namespace backend.Data
         public DbSet<Message> Messages { get; set; }
         public DbSet<WhiteboardSession> WhiteboardSessions { get; set; }
         public DbSet<WhiteboardAction> WhiteboardActions { get; set; }
+        public DbSet<FriendRequest> FriendRequests { get; set; }
+
 
 
     }

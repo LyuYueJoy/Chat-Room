@@ -17,6 +17,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 //repo/irepo
 builder.Services.AddScoped<IUserInterestRepository, UserInterestRepository>();
+builder.Services.AddScoped<IFriendRepository, FriendRepository>();
+
 
 //2.use cookie auth
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
