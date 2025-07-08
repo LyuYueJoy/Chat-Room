@@ -50,7 +50,6 @@ export async function updateInterest(interestId: string, newInterest: string): P
   }
 }
 // delete interest
-// 示例
 export async function deleteInterest(id: string) {
   const res = await fetch(`${API_BASE_URL}/api/UserInterests/delete`, {
     method: "DELETE",
@@ -61,7 +60,31 @@ export async function deleteInterest(id: string) {
 
   if (!res.ok) {
     const text = await res.text();
-    throw new Error(text || "删除兴趣失败");
+    throw new Error(text || "Failed to delete interest");
   }
 }
 
+//user name and email
+export const getUserProfile = async () => {
+  const res = await fetch(`${API_BASE_URL}/api/User/profile`, {
+    method: "GET",
+    credentials: "include", // 自动带 cookie
+  });
+
+  if (!res.ok) throw new Error("Failed to obtain user information");
+
+  return await res.json();
+};
+
+export const updateDisplayName = async (newDisplayName: string) => {
+  const res = await fetch(`${API_BASE_URL}/api/User/profile/display-name`, {
+    method: "PUT",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ newDisplayName }),
+  });
+
+  if (!res.ok) throw new Error("Failed to modify the user name");
+};

@@ -54,7 +54,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:3000", "https://frontendconnectspace-b4fchjbtbahhcba2.newzealandnorth-01.azurewebsites.net")
+        policy.WithOrigins("http://localhost:3000", "https://connectspace-cahxf9dddjcwb7dm.newzealandnorth-01.azurewebsites.net")
               .AllowCredentials()
               .AllowAnyHeader()
               .AllowAnyMethod();

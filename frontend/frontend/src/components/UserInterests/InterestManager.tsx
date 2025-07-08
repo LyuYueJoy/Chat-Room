@@ -151,7 +151,7 @@ export default function InterestManager() {
   return (
     <Box>
       <Typography variant="h6" gutterBottom>
-        My Interests
+        My Interests (max 5)
       </Typography>
       <List>
         {interests.map((item) => (
