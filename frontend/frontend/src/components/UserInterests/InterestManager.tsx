@@ -26,18 +26,9 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-// Preset interest list
-const presetInterests = [
-  "Music",
-  "Computer Science",
-  "Fishing",
-  "Study Together",
-  "Go Out",
-  "Basketball",
-  "Football",
-  "Sports",
-  "Others",
-];
+import { presetInterests } from "@/models/presetInterests";
+
+
 
 export default function InterestManager() {
   const [interests, setInterests] = useState<InterestItem[]>([]);

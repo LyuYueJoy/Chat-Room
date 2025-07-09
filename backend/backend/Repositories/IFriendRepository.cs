@@ -14,5 +14,7 @@ namespace backend.Repositories
         Task AcceptFriendRequestAsync(Guid requestId, Guid currentUserId);
         Task RejectFriendRequestAsync(Guid requestId, Guid currentUserId);
         Task DeleteFriendAsync(Guid userId, Guid friendUserId);
+        Task<User?> FindUserByEmailExcludingSelfAsync(string email, Guid currentUserId);
+
     }
 }

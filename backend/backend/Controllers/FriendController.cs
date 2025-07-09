@@ -1,6 +1,8 @@
-﻿using backend.Repositories;
+﻿using backend.Data;
+using backend.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace backend.Controllers
@@ -11,11 +13,14 @@ namespace backend.Controllers
     public class FriendController : ControllerBase
     {
         private readonly IFriendRepository _friendRepo;
+        private readonly AppDbContext _context;
 
-        public FriendController(IFriendRepository friendRepo)
+        public FriendController(IFriendRepository friendRepo, AppDbContext context)
         {
             _friendRepo = friendRepo;
+            _context = context;
         }
+
         private Guid GetUserId()
         {
             var idStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -64,9 +69,25 @@ namespace backend.Controllers
         [HttpGet("requests")]
         public async Task<IActionResult> GetFriendRequests()
         {
-            var requests = await _friendRepo.GetReceivedFriendRequestsAsync(CurrentUserId);
-            return Ok(requests);
+            var currentUserId = GetUserId();
+
+            var requests = await _friendRepo.GetReceivedFriendRequestsAsync(currentUserId);
+
+            var requesterIds = requests.Select(r => r.RequesterId).Distinct().ToList();
+            var requesters = await _context.Users
+                .Where(u => requesterIds.Contains(u.Id))
+                .ToDictionaryAsync(u => u.Id);
+
+            var result = requests.Select(r => new
+            {
+                r.Id,
+                requesterDisplayName = requesters.ContainsKey(r.RequesterId) ? requesters[r.RequesterId].DisplayName : "",
+                requesterEmail = requesters.ContainsKey(r.RequesterId) ? requesters[r.RequesterId].Email : ""
+            });
+
+            return Ok(result);
         }
+
         //accept friend
         [HttpPost("request/{requestId}/accept")]
         public async Task<IActionResult> AcceptFriendRequest(Guid requestId)
@@ -88,6 +109,26 @@ namespace backend.Controllers
             await _friendRepo.DeleteFriendAsync(CurrentUserId, friendUserId);
             return NoContent();
         }
+
+        //search by email
+        [HttpGet("search-by-email")]
+        public async Task<IActionResult> SearchByEmail([FromQuery] string email)
+        {
+            var currentUserId = GetUserId();
+            var user = await _friendRepo.FindUserByEmailExcludingSelfAsync(email, currentUserId);
+
+            if (user == null)
+                return NotFound("User not found or is yourself");
+
+            return Ok(new
+            {
+                user.Id,
+                user.DisplayName,
+                user.Email
+            });
+        }
+
+
     }
 
 }

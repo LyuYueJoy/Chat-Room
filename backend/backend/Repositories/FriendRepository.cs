@@ -116,6 +116,15 @@ namespace backend.Repositories
             await _context.SaveChangesAsync();
         }
 
+
+        public async Task<User?> FindUserByEmailExcludingSelfAsync(string email, Guid currentUserId)
+        {
+            return await _context.Users
+                .Where(u => u.Email == email && u.Id != currentUserId)
+                .FirstOrDefaultAsync();
+        }
+
+
     }
 
 }
