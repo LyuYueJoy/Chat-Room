@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { getFriendList, deleteFriend } from "@/services/friendService";
 import { Button, Typography, List, ListItem, ListItemText } from "@mui/material";
+import { User } from "@/models/User";
 
 export default function FriendList() {
-  const [friends, setFriends] = useState<any[]>([]);
+  const [friends, setFriends] = useState<User[]>([]);
 
   useEffect(() => {
     getFriendList().then(setFriends).catch(console.error);

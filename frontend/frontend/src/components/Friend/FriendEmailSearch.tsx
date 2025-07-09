@@ -2,10 +2,11 @@
 import React, { useState } from "react";
 import { searchUserByEmail, sendFriendRequest } from "@/services/friendService";
 import { TextField, Button, Typography, ListItem, ListItemText } from "@mui/material";
+import { User } from "@/models/User";
 
 export default function FriendEmailSearch() {
   const [email, setEmail] = useState("");
-  const [user, setUser] = useState<any | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [message, setMessage] = useState("");
 
   const handleSearch = async () => {
@@ -24,6 +25,7 @@ export default function FriendEmailSearch() {
   };
 
   const handleRequest = async () => {
+    if (!user) return;
     try {
       await sendFriendRequest(user.id);
       setMessage("Friend request sent!");

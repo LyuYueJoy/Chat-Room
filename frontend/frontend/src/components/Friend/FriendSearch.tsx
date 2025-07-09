@@ -15,10 +15,11 @@ import {
   Box,
 } from "@mui/material";
 import { presetInterests } from "@/models/presetInterests";
+import { User } from "@/models/User";
 
 export default function FriendSearch() {
   const [interest, setInterest] = useState("");
-  const [results, setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<User[]>([]);
   const [message, setMessage] = useState("");
   const [messageColor, setMessageColor] = useState<"error" | "success" | undefined>(undefined);
 

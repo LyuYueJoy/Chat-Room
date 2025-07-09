@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { getFriendRequests, acceptFriendRequest, rejectFriendRequest } from "@/services/friendService";
 import { Button, Typography, List, ListItem, ListItemText } from "@mui/material";
+import { FriendRequest } from "@/models/FriendRequests";
 
 export default function FriendRequests() {
-  const [requests, setRequests] = useState<any[]>([]);
+  const [requests, setRequests] = useState<FriendRequest[]>([]);
 
   const load = () => {
     getFriendRequests().then(setRequests).catch(console.error);
@@ -13,6 +14,7 @@ export default function FriendRequests() {
   useEffect(() => {
     load();
   }, []);
+  
 
   const handleAccept = async (id: string) => {
     await acceptFriendRequest(id);
