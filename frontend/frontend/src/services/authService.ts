@@ -54,8 +54,7 @@ export async function getCurrentUser() {
 }
 
 // logout
-// logout.ts
-export const logout = async () => {
+export const logoutUser  = async () => {
   const res = await fetch(`${API_BASE_URL}/api/Auth/logout`, {
     method: "POST",
     credentials: "include", 
