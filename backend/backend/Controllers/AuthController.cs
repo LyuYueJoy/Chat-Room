@@ -79,5 +79,19 @@ namespace backend.Controllers
             return Ok("Logged out successfully.");
         }
 
+        [HttpGet("me")]
+        public async Task<IActionResult> Me()
+        {
+            var userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userIdStr == null) return Unauthorized();
+
+            var userId = Guid.Parse(userIdStr);
+            var user = await _db.Users.FindAsync(userId);
+
+            if (user == null) return NotFound();
+
+            return Ok(new { user.Id, user.Email, user.DisplayName });
+        }
+
     }
 }

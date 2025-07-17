@@ -13,6 +13,12 @@ export default function FriendRequests() {
 
   useEffect(() => {
     load();
+
+    const interval = setInterval(() => {
+      load(); 
+    }, 5000);
+
+    return () => clearInterval(interval);
   }, []);
   
 

@@ -1,4 +1,5 @@
 ﻿using backend.Data;
+using backend.Hubs;
 using backend.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IUserInterestRepository, UserInterestRepository>();
 builder.Services.AddScoped<IFriendRepository, FriendRepository>();
 
+// signalR
+builder.Services.AddSignalR();
+
 
 //2.use cookie auth
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -34,7 +38,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         {
             OnRedirectToLogin = ctx =>
             {
-                ctx.Response.StatusCode = 401; // 别跳转
+                ctx.Response.StatusCode = 401; 
                 return Task.CompletedTask;
             },
             OnRedirectToAccessDenied = ctx =>
@@ -63,6 +67,8 @@ builder.Services.AddCors(options =>
     });
 });
 
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -83,5 +89,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<ChatHub>("/chathub").RequireCors("AllowFrontend");
+
 
 app.Run();

@@ -6,9 +6,18 @@ namespace backend.Models
     {
         [Key]
         public Guid Id { get; set; }
-        public Guid ChatRoomId { get; set; }
+
+        [Required]
         public Guid SenderId { get; set; }
-        public string Content { get; set; } = null!;
-        public DateTime Timestamp { get; set; }
+
+        [Required]
+        public Guid ReceiverId { get; set; }
+
+        [Required]
+        public string Content { get; set; }
+
+        public DateTime SentAt { get; set; } = DateTime.UtcNow;
+
+        public bool IsRead { get; set; } = false;
     }
 }

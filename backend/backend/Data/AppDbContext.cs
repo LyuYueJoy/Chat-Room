@@ -18,6 +18,13 @@ namespace backend.Data
         public DbSet<WhiteboardAction> WhiteboardActions { get; set; }
         public DbSet<FriendRequest> FriendRequests { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Friend>().HasIndex(f => new { f.UserId, f.FriendUserId }).IsUnique();
+        }
+
+
 
 
     }

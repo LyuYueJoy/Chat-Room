@@ -42,3 +42,31 @@ export async function register(data: RegisterRequest) {
   }
   return res;
 }
+
+//current id 
+// { id: "...", email: "...", displayName: "..." }
+export async function getCurrentUser() {
+  const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error("Failed to get current user");
+  return await res.json(); 
+}
+
+// logout
+// logout.ts
+export const logout = async () => {
+  const res = await fetch(`${API_BASE_URL}/api/Auth/logout`, {
+    method: "POST",
+    credentials: "include", 
+    headers: {
+      "Accept": "*/*",
+    },
+  });
+
+  if (res.ok) {
+    console.log("Logout successful");
+  } else {
+    console.error("Logout failed");
+  }
+};
