@@ -40,7 +40,7 @@ export async function sendFriendRequest(receiverId: string) {
     },
     body: JSON.stringify(receiverId),
   });
-  if (!res.ok) throw new Error("Failed to send friend request");
+  if (!res.ok) throw new Error("already friends or request already sent");
 }
 
 // get friend requests

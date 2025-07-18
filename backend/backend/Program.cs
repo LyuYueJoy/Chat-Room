@@ -91,6 +91,8 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapHub<ChatHub>("/chathub").RequireCors("AllowFrontend");
+app.MapHub<MatchHub>("/api/match").RequireCors("AllowFrontend");
+
 
 
 app.Run();

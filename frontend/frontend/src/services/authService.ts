@@ -54,18 +54,19 @@ export async function getCurrentUser() {
 }
 
 // logout
-export const logoutUser  = async () => {
-  const res = await fetch(`${API_BASE_URL}/api/Auth/logout`, {
+export async function logoutUser() {
+  const res = await fetch(`${API_BASE_URL}/api/auth/logout`, {
     method: "POST",
-    credentials: "include", 
+    credentials: "include",
     headers: {
-      "Accept": "*/*",
+      Accept: "*/*",
     },
   });
 
-  if (res.ok) {
-    console.log("Logout successful");
-  } else {
-    console.error("Logout failed");
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(`Logout failed: ${errorText}`);
   }
-};
+
+  return true;
+}

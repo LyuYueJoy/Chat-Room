@@ -90,5 +90,12 @@ namespace backend.Controllers
                 throw new UnauthorizedAccessException();
             return Guid.Parse(idStr);
         }
+
+        [HttpGet("by-user/{userId}")]
+        public async Task<IActionResult> GetInterestsByUserId(Guid userId)
+        {
+            var interests = await _repo.GetUserInterests(userId);
+            return Ok(interests.Select(x => new { x.Id, x.Interest }));
+        }
     }
 }

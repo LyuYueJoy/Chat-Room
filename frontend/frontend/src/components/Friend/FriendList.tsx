@@ -19,7 +19,7 @@ import { getFriendList, deleteFriend } from "@/services/friendService";
 import { sendMessage } from "@/services/chatService";
 import * as signalR from "@microsoft/signalr";
 import { getCurrentUser } from "@/services/authService";
-
+import { API_BASE_URL } from "@/services/api";
 
 export default function FriendList() {
   const [friends, setFriends] = useState<User[]>([]);
@@ -49,7 +49,7 @@ export default function FriendList() {
   // 初始化 SignalR
   useEffect(() => {
     const conn = new signalR.HubConnectionBuilder()
-      .withUrl("https://backend20250701173222.azurewebsites.net/chathub", {
+      .withUrl(`${API_BASE_URL}/chathub`, {
         withCredentials: true,
       })
       .withAutomaticReconnect()

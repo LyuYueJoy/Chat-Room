@@ -22,10 +22,10 @@ export default function LogoutButton() {
       onClick={handleLogout}
       variant="contained"
       sx={{
-        backgroundColor: "#ef4444", // Tailwind 的 red-500
+        backgroundColor: "#ef4444", 
         color: "white",
         "&:hover": {
-          backgroundColor: "#dc2626", // Tailwind 的 red-600
+          backgroundColor: "#dc2626", 
         },
         position: "fixed", 
         top: 16,

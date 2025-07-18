@@ -88,3 +88,15 @@ export const updateDisplayName = async (newDisplayName: string) => {
 
   if (!res.ok) throw new Error("Failed to modify the user name");
 };
+
+//user interest
+export const getUserInterestsById = async (userId: string) => {
+  const res = await fetch(`${API_BASE_URL}/api/UserInterests/by-user/${userId}`, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  if (!res.ok) throw new Error("Failed to fetch user interests");
+
+  return res.json(); 
+};
