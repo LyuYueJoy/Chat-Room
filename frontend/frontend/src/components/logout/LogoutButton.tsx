@@ -1,16 +1,14 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { logoutUser } from "@/services/authService";
 import { Button } from "@mui/material";
 
 export default function LogoutButton() {
-  const router = useRouter();
-
   const handleLogout = async () => {
     try {
       await logoutUser();
-      router.push("/login");
+      // 使用原生方式跳转
+      window.location.href = "/login";
     } catch (error) {
       console.error("Logout error:", error);
       alert("Logout failed. Please try again.");
