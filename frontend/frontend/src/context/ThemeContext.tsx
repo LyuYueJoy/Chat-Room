@@ -62,7 +62,7 @@ export default function ThemeContextProvider({ children }: { children: React.Rea
                 size="small"
                 sx={{
                   position: "fixed",
-                  bottom: 16,
+                  top: 16,
                   left: 16,
                   zIndex: 9999,
                 }}

@@ -1,10 +1,32 @@
+"use client";
+
 import Navbar from "@/components/navebar/navbarHome";
+import ScheduleManager from "@/components/Schedule/ScheduleManager";
+import { Typography } from "@mui/material";
 
 export default function RoomsPage() {
   return (
     <main style={{ padding: "2rem" }}>
-      <h1>room</h1>
-      <p>room</p>
+      <Typography
+        variant="h3"
+        component="h1"
+        align="center"
+        sx={{
+          fontWeight: "bold",
+          background: "linear-gradient(to right, #2196f3, #21cbf3)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          marginBottom: "2rem",
+          textShadow: "0 2px 4px rgba(0,0,0,0.3)",
+        }}
+      >
+        Schedule
+      </Typography>
+
+      <div className="min-h-screen bg-gray-50">
+        <ScheduleManager />
+      </div>
+
       <Navbar />
     </main>
   );

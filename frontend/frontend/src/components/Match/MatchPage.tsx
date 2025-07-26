@@ -37,9 +37,9 @@ export default function MatchPage() {
   const [matchedSnackbarOpen, setMatchedSnackbarOpen] = useState(false);
   const [partnerInterests, setPartnerInterests] = useState<string[]>([]);
 
-  const [addingFriend, setAddingFriend] = useState(false);                // ✅ 新增
-  const [addFriendSuccess, setAddFriendSuccess] = useState<string | null>(null); // ✅ 新增
-  const [addFriendError, setAddFriendError] = useState<string | null>(null);     // ✅ 新增
+  const [addingFriend, setAddingFriend] = useState(false);               
+  const [addFriendSuccess, setAddFriendSuccess] = useState<string | null>(null); 
+  const [addFriendError, setAddFriendError] = useState<string | null>(null);     
 
   const matchedOnce = useRef(false);
   const userIdRef = useRef<string>("");
@@ -104,7 +104,7 @@ export default function MatchPage() {
     }
   };
 
-  // ✅ 新增 添加好友逻辑
+  // add friend logic
   const handleAddFriend = async () => {
     if (!partnerId) return;
     setAddingFriend(true);
@@ -124,19 +124,42 @@ export default function MatchPage() {
 
   return (
     <Box p={4} maxWidth={600} margin="auto">
-      <Typography variant="h5" mb={2}>
-        🤝 Match & Add Friend
+      <Typography variant="h5" mb={2} align="center">
+        Match & Add Friend
       </Typography>
 
       {!partnerId && (
-        <Button variant="contained" onClick={handleStartMatching}>
-          Start Matching
-        </Button>
-      )}
+    <Box display="flex" justifyContent="center" mb={2}>
+      <Button
+        variant="contained"
+        onClick={handleStartMatching}
+        size="large"
+        sx={{
+          px: 50,
+          py: 15,
+          fontWeight: "bold",
+          fontSize: "1.2rem",
+          background: "linear-gradient(45deg, #2196f3 30%, #21cbf3 90%)",
+          color: "#fff",
+          borderRadius: 3,
+          boxShadow: "0 4px 15px rgba(33, 203, 243, 0.6)",
+          textTransform: "none",
+          transition: "all 0.3s ease",
+          "&:hover": {
+            background: "linear-gradient(45deg, #1976d2 30%, #1e88e5 90%)",
+            boxShadow: "0 6px 20px rgba(25, 118, 210, 0.8)",
+          },
+        }}
+      >
+        Start Matching
+      </Button>
+
+    </Box>
+  )}
 
       {partnerId && (
         <>
-          {/* ✅ 展示兴趣 */}
+          {/* show interest */}
           {partnerInterests.length > 0 && (
             <Box mb={2}>
               <Typography variant="subtitle1" fontWeight="bold">
@@ -148,7 +171,7 @@ export default function MatchPage() {
             </Box>
           )}
 
-          {/* ✅ 聊天窗口 */}
+          {/* talk window */}
           <Box
             mb={2}
             p={2}
@@ -202,7 +225,7 @@ export default function MatchPage() {
             })}
           </Box>
 
-          {/* ✅ 输入和发送按钮 */}
+          {/* send,write button */}
           <TextField
             fullWidth
             label="Type a message"
@@ -219,7 +242,7 @@ export default function MatchPage() {
             Send
           </Button>
 
-          {/* ✅ 添加好友按钮 */}
+          {/* add friend button */}
           <Button
             sx={{ mt: 1 }}
             variant="outlined"
@@ -230,7 +253,7 @@ export default function MatchPage() {
             {addingFriend ? "Adding..." : "Add Friend"}
           </Button>
 
-          {/* ✅ 显示反馈 */}
+          {/* show feedback */}
           {addFriendSuccess && (
             <Typography color="success.main" mt={1}>
               {addFriendSuccess}
@@ -244,7 +267,7 @@ export default function MatchPage() {
         </>
       )}
 
-      {/* ✅ Snackbar 通知 */}
+      {/*  Snackbar  */}
       <Snackbar
         open={matchedSnackbarOpen}
         autoHideDuration={3000}

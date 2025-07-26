@@ -17,6 +17,8 @@ namespace backend.Data
         public DbSet<WhiteboardSession> WhiteboardSessions { get; set; }
         public DbSet<WhiteboardAction> WhiteboardActions { get; set; }
         public DbSet<FriendRequest> FriendRequests { get; set; }
+        public DbSet<Schedule> Schedules { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

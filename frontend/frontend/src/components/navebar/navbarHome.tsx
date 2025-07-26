@@ -64,7 +64,7 @@ export default function NavbarHome() {
       elevation={3}
     >
       <BottomNavigation value={value} onChange={handleChange} showLabels>
-        <BottomNavigationAction label="rooms" />
+        <BottomNavigationAction label="Schedule" />
         <BottomNavigationAction label="explore" />
         <BottomNavigationAction label="home" />
         <BottomNavigationAction label="messages" />

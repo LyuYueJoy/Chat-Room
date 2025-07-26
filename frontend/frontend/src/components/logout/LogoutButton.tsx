@@ -7,7 +7,6 @@ export default function LogoutButton() {
   const handleLogout = async () => {
     try {
       await logoutUser();
-      // 使用原生方式跳转
       window.location.href = "/login";
     } catch (error) {
       console.error("Logout error:", error);
