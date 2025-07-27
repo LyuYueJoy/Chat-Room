@@ -6,6 +6,8 @@ Connect Space is a social platform that allows users to register, send friend re
 
 - User registration and login with cookie authentication
 - Send, accept, and reject friend requests
+- Interest selection
+- Schedule creation and coordination  
 - Friend list management
 - Random user matching for instant chat
 - Real-time messaging via WebSocket
@@ -16,7 +18,7 @@ Connect Space is a social platform that allows users to register, send friend re
 - Frontend: Next.js, React, TypeScript, Material-UI
 - Backend: .NET Core Web API
 - Real-time Communication: WebSocket
-- Database: Entity Framework Core with SQL Server 
+- Database: SQL Server 
 - Authentication: Cookie-based
 
 ## Getting Started

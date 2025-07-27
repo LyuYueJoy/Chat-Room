@@ -5,10 +5,10 @@ namespace backend.Hubs
 {
     public class MatchHub : Hub
     {
-        // 用线程安全的队列存储等待用户（最多一个）
+        // Use a thread-safe queue to store waiting users (at most one)
         private static readonly ConcurrentQueue<string> WaitingUsers = new ConcurrentQueue<string>();
 
-        // 用户ID到连接ID映射，普通字典，因修改都在单线程Hub上下文
+        // User ID to connection ID mapping, ordinary dictionary, because all modifications are in the single-threaded Hub context
         private static readonly Dictionary<string, string> UserToConnection = new Dictionary<string, string>();
 
         public override Task OnConnectedAsync()
@@ -28,7 +28,7 @@ namespace backend.Hubs
             {
                 UserToConnection.Remove(userId);
             }
-            // 如果断开连接的用户还在等待队列中，移除
+            // If the disconnected user is still in the waiting queue, remove
             RemoveFromWaitingQueue(userId);
 
             return base.OnDisconnectedAsync(exception);
@@ -36,7 +36,7 @@ namespace backend.Hubs
 
         private void RemoveFromWaitingQueue(string userId)
         {
-            // 由于ConcurrentQueue无Remove，先尝试出队并重新入队剩余用户
+            // Since ConcurrentQueue has no Remove, try to dequeue and requeue the remaining users first
             var tempQueue = new Queue<string>();
             while (WaitingUsers.TryDequeue(out var uid))
             {
@@ -54,30 +54,30 @@ namespace backend.Hubs
 
         public async Task StartMatching(string userId)
         {
-            // 尝试匹配已有等待用户
+            // Try to match an existing waiting user
             if (WaitingUsers.TryDequeue(out var partnerId))
             {
                 if (!UserToConnection.ContainsKey(partnerId) || !UserToConnection.ContainsKey(userId))
                 {
-                    // 连接已经不存在，通知当前用户失败，或直接忽略
+                    // The connection no longer exists, notifying the current user failed, or simply ignoring it
                     return;
                 }
 
                 var partnerConn = UserToConnection[partnerId];
                 var myConn = Context.ConnectionId;
 
-                // 通知匹配双方
+                // Notify both parties of the match
                 await Clients.Client(myConn).SendAsync("Matched", partnerId);
                 await Clients.Client(partnerConn).SendAsync("Matched", userId);
             }
             else
             {
-                // 等待队列空，确保用户不重复入队
+                // Wait for the queue to be empty to ensure that users do not enter the queue repeatedly
                 if (!WaitingUsers.Contains(userId))
                 {
                     WaitingUsers.Enqueue(userId);
                 }
-                // 否则用户已经在等待中，不重复入队
+                // Otherwise, the user is already waiting and will not be added to the queue again.
             }
         }
 

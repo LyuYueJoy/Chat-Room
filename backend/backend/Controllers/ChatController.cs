@@ -25,7 +25,7 @@ namespace backend.Controllers
         [HttpPost("send")]
         public async Task<IActionResult> SendMessage([FromBody] MessageDto dto)
         {
-            // 验证是否是好友
+            // Verify if you are a friend
             if (!await AreUsersFriends(dto.SenderId, dto.ReceiverId))
             {
                 return Forbid("You are not friends.");
@@ -43,7 +43,7 @@ namespace backend.Controllers
             _context.Messages.Add(message);
             await _context.SaveChangesAsync();
 
-            // 推送到 SignalR
+            // SignalR
             await _hubContext.Clients.User(dto.ReceiverId.ToString())
                 .SendAsync("ReceiveMessage", dto.SenderId.ToString(), dto.Content);
 
