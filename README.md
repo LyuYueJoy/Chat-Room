@@ -45,3 +45,16 @@ cd frontend
 npm install
 npm run dev
 ````
+
+### docker
+1. **frontend**
+````bash
+docker pull joylyuyue/chat-room-frontend:latest  
+docker run -p 3000:3000 joylyuyue/chat-room-frontend:latest
+````
+
+2. **backend**
+````bash
+docker pull joylyuyue/chat-room-backend:latest
+docker run -p 5000:8080 joylyuyue/chat-room-backend:latest
+````
